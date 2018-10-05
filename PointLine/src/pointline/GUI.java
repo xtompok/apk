@@ -31,34 +31,106 @@ public class GUI extends javax.swing.JFrame {
 
         drawPanel = new javax.swing.JPanel();
         controlPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        drawButton = new javax.swing.JButton();
+        CFieldY = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        CFieldX = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        BFieldX = new javax.swing.JTextField();
+        AFieldY = new javax.swing.JTextField();
+        AFieldX = new javax.swing.JTextField();
+        BFieldY = new javax.swing.JTextField();
+        resLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         drawPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         drawPanel.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setText("Bod");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        drawButton.setText("Nakresli!");
+        drawButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                drawButtonActionPerformed(evt);
             }
         });
+
+        CFieldY.setText("60");
+
+        jLabel1.setText("Bod");
+
+        CFieldX.setText("60");
+        CFieldX.setToolTipText("");
+
+        jLabel2.setText("Usečka");
+
+        BFieldX.setText("10");
+
+        AFieldY.setText("10");
+
+        AFieldX.setText("110");
+
+        BFieldY.setText("110");
+        BFieldY.setToolTipText("");
+
+        resLabel.setText("výsledek");
 
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1))
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(AFieldX, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                    .addComponent(BFieldX))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BFieldY, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                    .addComponent(AFieldY))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(CFieldX, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(CFieldY, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(drawButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(resLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(controlPanelLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(15, 15, 15)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CFieldY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CFieldX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AFieldY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AFieldX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BFieldX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BFieldY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(drawButton)
+                .addGap(34, 34, 34)
+                .addComponent(resLabel)
+                .addContainerGap(139, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -67,9 +139,9 @@ public class GUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(controlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(drawPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -84,12 +156,67 @@ public class GUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+    private void calculatePosition(int ax, int ay, int bx, int by, int cx, int cy){
+        if (ax == cx && ay == cy){
+            resLabel.setText("V bode A");
+            return;
+        }
+        if (bx == cx && by == cy){
+            resLabel.setText("V bode B");
+            return;
+        }
+        
+        int ux = bx - ax;
+        int uy = by - ay;
+        
+        int vx = cx - ax;
+        int vy = cy - ay;
+        
+        int a = -uy;
+        int b = ux;
+        int c = -a*ax - b*ay;
+        
+        
+        int res = a*cx + b*cy + c;
+        if (res == 0){
+            int dotuu = ux*ux + uy*uy;
+            int dotuv = ux*vx + uy*vy;
+            if (dotuv < 0){
+                resLabel.setText("Mimo usecku -");
+                return;
+            }
+            if (dotuv < dotuu){
+                resLabel.setText("Na usecce");
+            } else {
+                resLabel.setText("Mimo usecku +");
+            }
+        } else if (res < 0){
+            resLabel.setText("Vpravo");
+        } else {
+            resLabel.setText("Vlevo");
+        }
+    
+    }
+    
+    
+    private void drawButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_drawButtonActionPerformed
         // TODO add your handling code here:
         Graphics2D gfx = (Graphics2D)drawPanel.getGraphics();
-        gfx.drawLine(0, 0, 100, 100);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        int ax = Integer.parseInt(AFieldX.getText());
+        int ay = Integer.parseInt(AFieldY.getText());
+        int bx = Integer.parseInt(BFieldX.getText());
+        int by = Integer.parseInt(BFieldY.getText());
+        int cx = Integer.parseInt(CFieldX.getText());
+        int cy = Integer.parseInt(CFieldY.getText());
+        int height = drawPanel.getHeight();
+        
+        calculatePosition(ax, ay, bx, by, cx, cy);
+        
+        gfx.drawOval(cx, height - cy, 10, 10);
+        gfx.drawOval(bx, height - by, 3,3);
+        gfx.drawLine(ax, height - ay, bx, height - by);
+    }//GEN-LAST:event_drawButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,8 +254,17 @@ public class GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AFieldX;
+    private javax.swing.JTextField AFieldY;
+    private javax.swing.JTextField BFieldX;
+    private javax.swing.JTextField BFieldY;
+    private javax.swing.JTextField CFieldX;
+    private javax.swing.JTextField CFieldY;
     private javax.swing.JPanel controlPanel;
+    private javax.swing.JButton drawButton;
     private javax.swing.JPanel drawPanel;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel resLabel;
     // End of variables declaration//GEN-END:variables
 }
