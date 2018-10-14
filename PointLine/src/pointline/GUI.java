@@ -5,7 +5,10 @@
  */
 package pointline;
 
+import com.opencsv.CSVReader;
 import java.awt.Graphics2D;
+import java.io.FileReader;
+
 
 /**
  *
@@ -41,6 +44,7 @@ public class GUI extends javax.swing.JFrame {
         AFieldX = new javax.swing.JTextField();
         BFieldY = new javax.swing.JTextField();
         resLabel = new javax.swing.JLabel();
+        drawPanel1 = new pointline.drawPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +78,17 @@ public class GUI extends javax.swing.JFrame {
 
         resLabel.setText("výsledek");
 
+        javax.swing.GroupLayout drawPanel1Layout = new javax.swing.GroupLayout(drawPanel1);
+        drawPanel1.setLayout(drawPanel1Layout);
+        drawPanel1Layout.setHorizontalGroup(
+            drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 387, Short.MAX_VALUE)
+        );
+        drawPanel1Layout.setVerticalGroup(
+            drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 226, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
@@ -100,12 +115,14 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(CFieldY, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(controlPanelLayout.createSequentialGroup()
                         .addGap(44, 44, 44)
-                        .addComponent(drawButton)))
+                        .addComponent(drawButton))
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(resLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(resLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addComponent(drawPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,7 +147,8 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(drawButton)
                 .addGap(34, 34, 34)
                 .addComponent(resLabel)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,6 +234,9 @@ public class GUI extends javax.swing.JFrame {
         gfx.drawOval(cx, height - cy, 10, 10);
         gfx.drawOval(bx, height - by, 3,3);
         gfx.drawLine(ax, height - ay, bx, height - by);
+        
+        CSVReader reader = new CSVReader(FileReader("test"));
+        reader.
     }//GEN-LAST:event_drawButtonActionPerformed
 
     /**
@@ -263,6 +284,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel controlPanel;
     private javax.swing.JButton drawButton;
     private javax.swing.JPanel drawPanel;
+    private pointline.drawPanel drawPanel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel resLabel;
