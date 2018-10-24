@@ -5,17 +5,68 @@
  */
 package convexhull;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
+
 /**
  *
  * @author jethro
  */
 public class drawPanel extends javax.swing.JPanel {
+    
+    Point2D [] points;
+    Path2D hull;
+    
+    
 
     /**
      * Creates new form drawPanel
      */
     public drawPanel() {
+        points = new Point2D[0];
+        hull = new Path2D.Double();
         initComponents();
+    }
+    
+    @Override
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        Graphics2D gfx = (Graphics2D)g;
+        
+        int width;
+        int height;
+        
+        width = this.getWidth();
+        height = this.getHeight();
+            
+       
+        gfx.setColor(Color.BLACK);
+        
+        for (int i=0;i<points.length;i++){
+            int x;
+            int y;
+            x = (int)(points[i].getX()*width);
+            y = (int)((1-points[i].getY())*height);
+            System.out.println(points[i].getX());
+            System.out.println(x);
+
+            gfx.drawLine(x-5, y-5, x+5, y+5);
+            gfx.drawLine(x-5, y+5, x+5, y-5);
+
+        }
+        
+        gfx.setColor(Color.RED);
+        AffineTransform at = AffineTransform.getScaleInstance(width, -height);
+        hull.transform(at);
+        at = AffineTransform.getTranslateInstance(0, height);
+        hull.transform(at);
+        gfx.draw(hull);
     }
 
     /**

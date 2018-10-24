@@ -5,11 +5,16 @@
  */
 package convexhull;
 
+import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.util.Random;
+
 /**
  *
  * @author jethro
  */
 public class GUI extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form GUI
@@ -30,6 +35,7 @@ public class GUI extends javax.swing.JFrame {
         drawPanel1 = new convexhull.drawPanel();
         pointsButton = new javax.swing.JButton();
         jarvisButton = new javax.swing.JButton();
+        pointCountField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,8 +51,20 @@ public class GUI extends javax.swing.JFrame {
         );
 
         pointsButton.setText("Points");
+        pointsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pointsButtonActionPerformed(evt);
+            }
+        });
 
         jarvisButton.setText("Jarvis");
+        jarvisButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jarvisButtonActionPerformed(evt);
+            }
+        });
+
+        pointCountField.setText("100");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -56,7 +74,8 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pointsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                    .addComponent(jarvisButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jarvisButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pointCountField))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(drawPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -67,16 +86,39 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(pointCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
                         .addComponent(pointsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(39, 39, 39)
                         .addComponent(jarvisButton)
-                        .addGap(0, 562, Short.MAX_VALUE))
+                        .addGap(0, 490, Short.MAX_VALUE))
                     .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void pointsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pointsButtonActionPerformed
+        int npoints;
+        npoints = Integer.parseInt(pointCountField.getText());
+        Point2D [] points;
+        points = new Point2D[npoints];
+        Random rnd;
+        rnd = new Random();
+        for (int i=0;i<npoints;i++){
+            
+            points[i] = new Point2D.Double(rnd.nextDouble(),rnd.nextDouble());
+        }
+        
+        drawPanel1.points = points;
+        drawPanel1.repaint();
+    }//GEN-LAST:event_pointsButtonActionPerformed
+
+    private void jarvisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jarvisButtonActionPerformed
+        drawPanel1.hull = Algorithms.jarvisScan(drawPanel1.points);
+        drawPanel1.repaint();
+    }//GEN-LAST:event_jarvisButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -116,6 +158,7 @@ public class GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private convexhull.drawPanel drawPanel1;
     private javax.swing.JButton jarvisButton;
+    private javax.swing.JTextField pointCountField;
     private javax.swing.JButton pointsButton;
     // End of variables declaration//GEN-END:variables
 }

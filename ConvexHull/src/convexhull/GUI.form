@@ -28,6 +28,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="pointsButton" pref="157" max="32767" attributes="0"/>
                   <Component id="jarvisButton" max="32767" attributes="0"/>
+                  <Component id="pointCountField" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="drawPanel1" min="-2" max="-2" attributes="0"/>
@@ -41,10 +42,12 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <Component id="pointCountField" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="pointsButton" min="-2" pref="33" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Component id="jarvisButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="562" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="490" max="32767" attributes="0"/>
                   </Group>
                   <Component id="drawPanel1" max="32767" attributes="0"/>
               </Group>
@@ -73,10 +76,21 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Points"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pointsButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jarvisButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Jarvis"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jarvisButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="pointCountField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="100"/>
       </Properties>
     </Component>
   </SubComponents>
