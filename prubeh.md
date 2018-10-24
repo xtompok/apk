@@ -9,6 +9,10 @@ Průběh cvičení
 ----------
 - poloha bodu vůči konvexnímu polygonu - ovíjení
 
-3. cvičení (plán)
+3. cvičení (vedl doc. Bayer)
 -----------------
 - poloha bodu vůči konvexnímu polygonu - vrháme paprsky
+
+4. cvičení (plán)
+-----------------
+- konvexní obaly - Jarvis scan

@@ -23,3 +23,6 @@
 hs_err_pid*
 /PointPolygon/nbproject/private/
 /PointPolygon/build/
+/ConvexHull/nbproject/private/
+/ConvexHull/build/
+/ConvexHull/dist/
