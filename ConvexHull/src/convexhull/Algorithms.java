@@ -31,7 +31,7 @@ public class Algorithms {
         return sqrt(ux*ux + uy*uy);
     }
     
-    public static double scalarProjection(double ux, double uy, double vx, double vy){
+    public static double dotProdNorm(double ux, double uy, double vx, double vy){
         double prod = dotProd(ux, uy, vx, vy);
         double ulen = len(ux,uy);
         double vlen = len(vx,vy);
@@ -39,7 +39,7 @@ public class Algorithms {
     }
     
     public static double angle(double ux, double uy, double vx, double vy){
-        return acos(scalarProjection(ux,uy,vx,vy));
+        return acos(dotProdNorm(ux,uy,vx,vy));
     }
     
     public static PositionEnum pointPolygonWinding(Point pt, Polygon poly){
@@ -93,10 +93,10 @@ public class Algorithms {
             ux = prevPt.getX()- curPt.getX();
             uy = prevPt.getY()- curPt.getY();
                         
-            double max;
-            Point2D maxPt;
-            max = Double.MAX_VALUE;
-            maxPt = null;
+            double min;
+            Point2D minPt;
+            min = 1.1;
+            minPt = null;
             
             for (Point2D pt: points){
                 if ((pt == curPt)||(pt == prevPt)){
@@ -105,16 +105,16 @@ public class Algorithms {
                 double vx,vy;
                 vx = pt.getX() - curPt.getX();
                 vy = pt.getY() - curPt.getY();
-                double m = scalarProjection(ux,uy,vx,vy);
-                if (m < max){
-                    max = m;
-                    maxPt = pt;
+                double m = dotProdNorm(ux,uy,vx,vy);
+                if (m < min){
+                    min = m;
+                    minPt = pt;
                 }   
             }
             
-            hullPoints.add(maxPt);
+            hullPoints.add(minPt);
             prevPt = curPt;
-            curPt = maxPt;
+            curPt = minPt;
             
         }
         while (hullPoints.getLast()!=miny);
