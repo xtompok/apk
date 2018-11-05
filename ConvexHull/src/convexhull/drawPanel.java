@@ -53,8 +53,8 @@ public class drawPanel extends javax.swing.JPanel {
             int y;
             x = (int)(points[i].getX()*width);
             y = (int)((1-points[i].getY())*height);
-            System.out.println(points[i].getX());
-            System.out.println(x);
+//            System.out.println(points[i].getX());
+//            System.out.println(x);
 
             gfx.drawLine(x-5, y-5, x+5, y+5);
             gfx.drawLine(x-5, y+5, x+5, y-5);

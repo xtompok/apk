@@ -24,15 +24,29 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="pointsButton" pref="157" max="32767" attributes="0"/>
-                  <Component id="jarvisButton" max="32767" attributes="0"/>
-                  <Component id="pointCountField" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="pointsButton" pref="157" max="32767" attributes="0"/>
+                          <Component id="pointCountField" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                      <Component id="qhButton" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="drawPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="jarvisButton1" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="690" max="-2" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -45,13 +59,20 @@
                       <Component id="pointCountField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="pointsButton" min="-2" pref="33" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                      <Component id="jarvisButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="490" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                      <Component id="qhButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="437" max="32767" attributes="0"/>
                   </Group>
                   <Component id="drawPanel1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
+                  <Component id="jarvisButton1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="492" max="32767" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -80,18 +101,26 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pointsButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jarvisButton">
+    <Component class="javax.swing.JButton" name="qhButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Jarvis"/>
+        <Property name="text" type="java.lang.String" value="QuickHull"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jarvisButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="qhButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="pointCountField">
       <Properties>
         <Property name="text" type="java.lang.String" value="100"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jarvisButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Jarvis"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jarvisButton1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

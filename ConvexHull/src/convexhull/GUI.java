@@ -34,8 +34,9 @@ public class GUI extends javax.swing.JFrame {
 
         drawPanel1 = new convexhull.drawPanel();
         pointsButton = new javax.swing.JButton();
-        jarvisButton = new javax.swing.JButton();
+        qhButton = new javax.swing.JButton();
         pointCountField = new javax.swing.JTextField();
+        jarvisButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,28 +58,44 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        jarvisButton.setText("Jarvis");
-        jarvisButton.addActionListener(new java.awt.event.ActionListener() {
+        qhButton.setText("QuickHull");
+        qhButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jarvisButtonActionPerformed(evt);
+                qhButtonActionPerformed(evt);
             }
         });
 
         pointCountField.setText("100");
+
+        jarvisButton1.setText("Jarvis");
+        jarvisButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jarvisButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pointsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                    .addComponent(jarvisButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pointCountField))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pointsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                            .addComponent(pointCountField)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(qhButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(drawPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(22, 22, 22)
+                    .addComponent(jarvisButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(690, 690, 690)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,11 +106,16 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(pointCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
                         .addComponent(pointsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(jarvisButton)
-                        .addGap(0, 490, Short.MAX_VALUE))
+                        .addGap(92, 92, 92)
+                        .addComponent(qhButton)
+                        .addGap(0, 437, Short.MAX_VALUE))
                     .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(145, 145, 145)
+                    .addComponent(jarvisButton1)
+                    .addContainerGap(492, Short.MAX_VALUE)))
         );
 
         pack();
@@ -115,10 +137,15 @@ public class GUI extends javax.swing.JFrame {
         drawPanel1.repaint();
     }//GEN-LAST:event_pointsButtonActionPerformed
 
-    private void jarvisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jarvisButtonActionPerformed
+    private void qhButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qhButtonActionPerformed
+        drawPanel1.hull = Algorithms.quickHull(drawPanel1.points);
+        drawPanel1.repaint();
+    }//GEN-LAST:event_qhButtonActionPerformed
+
+    private void jarvisButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jarvisButton1ActionPerformed
         drawPanel1.hull = Algorithms.jarvisScan(drawPanel1.points);
         drawPanel1.repaint();
-    }//GEN-LAST:event_jarvisButtonActionPerformed
+    }//GEN-LAST:event_jarvisButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,8 +184,9 @@ public class GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private convexhull.drawPanel drawPanel1;
-    private javax.swing.JButton jarvisButton;
+    private javax.swing.JButton jarvisButton1;
     private javax.swing.JTextField pointCountField;
     private javax.swing.JButton pointsButton;
+    private javax.swing.JButton qhButton;
     // End of variables declaration//GEN-END:variables
 }

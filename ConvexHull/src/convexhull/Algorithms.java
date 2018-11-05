@@ -5,7 +5,7 @@
  */
 package convexhull;
 
-import java.awt.List;
+import java.util.List;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.Path2D;
@@ -14,6 +14,7 @@ import static java.lang.Math.abs;
 import static java.lang.Math.acos;
 import static java.lang.Math.atan2;
 import static java.lang.Math.sqrt;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -78,7 +79,7 @@ public class Algorithms {
         }
         
         hull.moveTo(miny.getX(),miny.getY());
-        hullPoints.add(new Point2D.Double(0,0));
+        hullPoints.add(new Point2D.Double(0,miny.getY()));
         hullPoints.add(miny);
         
         Point2D prevPt;
@@ -95,7 +96,7 @@ public class Algorithms {
                         
             double min;
             Point2D minPt;
-            min = 1.1;
+            min = Double.MAX_VALUE;
             minPt = null;
             
             for (Point2D pt: points){
@@ -103,9 +104,9 @@ public class Algorithms {
                     continue;
                 }
                 double vx,vy;
-                vx = pt.getX() - curPt.getX();
-                vy = pt.getY() - curPt.getY();
-                double m = dotProdNorm(ux,uy,vx,vy);
+                vx = curPt.getX() - pt.getX();
+                vy = curPt.getY() - pt.getY();
+                double m = angle(ux,uy,vx,vy);
                 if (m < min){
                     min = m;
                     minPt = pt;
@@ -130,6 +131,140 @@ public class Algorithms {
         hull.lineTo(hullPoints.get(1).getX(),hullPoints.get(1).getY());
     
         return hull;
+    }
+    
+    public static Path2D quickHull(Point2D [] points){
+        Path2D hull;
+        hull = new Path2D.Double();
+        
+        Point2D minx;
+        Point2D maxx;
+        minx = points[0];
+        maxx = points[0];
+        for (Point2D pt : points){
+            if (pt.getX() < minx.getX()){
+                minx = pt;
+            }
+            if (pt.getX() > maxx.getX()){
+                maxx = pt;
+            }
+        }
+        
+        hull.moveTo(maxx.getX(),maxx.getY());
+        
+    
+        
+        List<Point2D>[] splitted = splitPoints(minx, maxx, Arrays.asList(points));
+        Point2D[] upperHull = qh(maxx,minx,splitted[0]);
+        Point2D[] lowerHull = qh(minx,maxx,splitted[1]);
+        
+        System.out.println(upperHull.length);
+        System.out.println(lowerHull.length);
+        
+        for (Point2D pt: lowerHull){
+            hull.lineTo(pt.getX(), pt.getY());
+        }
+
+        hull.lineTo(minx.getX(), minx.getY());
+        for (Point2D pt: upperHull){
+            hull.lineTo(pt.getX(), pt.getY());
+        }
+
+        hull.lineTo(maxx.getX(),maxx.getY());
+
+        return hull;
+    }
+    
+    private static Point2D[] qh(Point2D start, Point2D end, List<Point2D> points){
+        if (points.size() == 0){
+            return new Point2D[0];
+        }
+        
+        double max = -1;
+        Point2D farthestPt = null;
+        
+        for (Point2D pt: points){
+            double dist = distanceFromLine(start, end, pt);
+            if (dist > max){
+                max = dist;
+                farthestPt = pt;
+            }
+        }
+        
+        if (farthestPt == null){
+            System.out.println("FP je null");
+        }
+        
+        List<Point2D>[] startPts = splitPoints(farthestPt,start,points);
+        List<Point2D>[] endPts = splitPoints(end,farthestPt, points);
+        if (startPts[0].size() + startPts[1].size() + 2 != points.size()){
+            System.out.print("Nesedi soucet: ");
+            System.out.format("0: %d 1: %d p:%d\n",startPts[0].size(),startPts[1].size(),points.size());
+        }
+        
+        
+        Point2D[] startHull = qh(start,farthestPt,startPts[0]);
+        Point2D[] endHull = qh(farthestPt,end,endPts[0]);
+        
+        Point2D[] res;
+        res = new Point2D[startHull.length+endHull.length+1];
+        
+        int residx = 0;
+        for (Point2D pt: endHull){
+            res[residx] = pt;
+            residx++;
+        }
+        res[residx] = farthestPt;
+        residx++;
+        for (Point2D pt: startHull){
+            res[residx] = pt;
+            residx++;
+        }
+        
+        return res;
+        
+      
+    
+    }
+    
+    public static List<Point2D> [] splitPoints(Point2D start, Point2D end, List<Point2D> points){
+        double epsilon = 0.0001;
+        
+        List<Point2D>[] res = new List[2];
+        res[0] = new LinkedList<>();
+        res[1] = new LinkedList<>();
+        
+        for (Point2D pt: points){
+            if (pt == start || pt == end){
+                continue;
+            }
+            double det = (end.getX()-start.getX())*(pt.getY()-start.getY()) - 
+                    (end.getY()-start.getY())*(pt.getX() - start.getX());
+            if (det > epsilon){
+                res[0].add(pt);
+            }else if (det < -epsilon){
+                res[1].add(pt);
+            }
+        }
+        
+        return res;
+        
+    
+    }
+    
+    public static double distanceFromLine(Point2D start, Point2D end, Point2D pt){
+        double nom;
+        double denom;
+        
+        nom = abs((end.getY()-start.getY())*pt.getX() - 
+                  (end.getX()-start.getX())*pt.getY() +
+                  end.getX()*start.getY() - 
+                  end.getY()*start.getX());
+        denom = sqrt((end.getY()-start.getY())*
+                     (end.getY()-start.getY())+
+                     (end.getX()-start.getX())*
+                     (end.getX()-start.getX()));
+        return nom/denom;
     }
     
     
