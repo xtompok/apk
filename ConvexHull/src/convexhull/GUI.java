@@ -37,6 +37,7 @@ public class GUI extends javax.swing.JFrame {
         qhButton = new javax.swing.JButton();
         pointCountField = new javax.swing.JTextField();
         jarvisButton1 = new javax.swing.JButton();
+        sweepButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +75,13 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        sweepButton.setText("SweepLine");
+        sweepButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sweepButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,7 +95,9 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(pointCountField)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(qhButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sweepButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(qhButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(drawPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -108,7 +118,9 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(pointsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(92, 92, 92)
                         .addComponent(qhButton)
-                        .addGap(0, 437, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(sweepButton)
+                        .addGap(0, 394, Short.MAX_VALUE))
                     .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,6 +158,11 @@ public class GUI extends javax.swing.JFrame {
         drawPanel1.hull = Algorithms.jarvisScan(drawPanel1.points);
         drawPanel1.repaint();
     }//GEN-LAST:event_jarvisButton1ActionPerformed
+
+    private void sweepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sweepButtonActionPerformed
+        drawPanel1.hull = Algorithms.sweepHull(drawPanel1.points);
+        drawPanel1.repaint();
+    }//GEN-LAST:event_sweepButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,5 +205,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTextField pointCountField;
     private javax.swing.JButton pointsButton;
     private javax.swing.JButton qhButton;
+    private javax.swing.JButton sweepButton;
     // End of variables declaration//GEN-END:variables
 }

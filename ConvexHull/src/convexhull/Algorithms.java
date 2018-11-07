@@ -15,14 +15,31 @@ import static java.lang.Math.acos;
 import static java.lang.Math.atan2;
 import static java.lang.Math.sqrt;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  *
  * @author jethro
  */
 public class Algorithms {
+    public static final double EPSILON = 0.0001;
+    
     public enum PositionEnum {INSIDE,OUTSIDE,BOUNDARY}
+    public enum OrientationEnum {CW,COLINEAR,CCW}
+    
+    public static OrientationEnum getOrientation(Point2D p1, Point2D p2, Point2D p3){
+         double val = (p2.getY() - p1.getY()) * (p3.getX() - p2.getX()) - 
+                  (p2.getX() - p1.getX()) * (p3.getY() - p2.getY()); 
+         if (abs(val) < EPSILON){
+             return OrientationEnum.COLINEAR;
+         }else if (val > 0){
+             return OrientationEnum.CW;
+         }else {
+             return OrientationEnum.CCW;
+         }
+    }
     
     public static double dotProd(double ux, double uy, double vx, double vy){
         return ux*vx + uy*vy;
@@ -42,6 +59,7 @@ public class Algorithms {
     public static double angle(double ux, double uy, double vx, double vy){
         return acos(dotProdNorm(ux,uy,vx,vy));
     }
+    
     
     public static PositionEnum pointPolygonWinding(Point pt, Polygon poly){
         double sumAngle = 0;
@@ -131,6 +149,70 @@ public class Algorithms {
         hull.lineTo(hullPoints.get(1).getX(),hullPoints.get(1).getY());
     
         return hull;
+    }
+    
+    public static Path2D sweepHull(Point2D [] points){
+        Path2D hull;
+        hull = new Path2D.Double();
+        Arrays.sort(points, (Point2D p1, Point2D p2) -> Double.compare(p1.getX(), p2.getX()));
+        
+        List<Point2D> upperHull;
+        List<Point2D> lowerHull;
+        
+        upperHull = new LinkedList<>();
+        lowerHull = new LinkedList<>();
+        
+        for (Point2D pt: points){
+            upperHull.add(pt);
+            lowerHull.add(pt);
+        }
+        
+        fixConvexity(upperHull, OrientationEnum.CW);
+        fixConvexity(lowerHull, OrientationEnum.CCW);
+        
+        hull.moveTo(lowerHull.get(0).getX(), lowerHull.get(0).getY());
+        
+        for (Point2D pt : lowerHull){
+            hull.lineTo(pt.getX(), pt.getY());
+        }
+        for (Point2D pt : upperHull){
+            hull.lineTo(pt.getX(), pt.getY());
+        }
+        
+        return hull;
+    }
+    
+    public static void fixConvexity(List<Point2D> points,OrientationEnum orientation){
+        if (points.size() < 3){
+            return;
+        }
+        ListIterator<Point2D> iterator;
+        iterator = points.listIterator();
+        Point2D prev;
+        Point2D cur;
+        Point2D next;
+        prev = iterator.next();
+        cur = iterator.next();
+        next = iterator.next();
+
+        
+        while (iterator.hasNext()){
+            System.err.format("p:%h, c:%h, n:%h\n", prev,cur,next);
+            // Orientace je v pořádku
+            if (getOrientation(prev,cur,next) == orientation){
+                prev = cur;
+                cur = next;
+                next = iterator.next();
+                continue;
+            }
+            System.out.println("Orientation test failed");
+            //Orientace je rozbitá => smažeme předchozí vrchol
+            iterator.previous();
+            iterator.remove();
+            cur = iterator.next();
+            next = iterator.next();
+        }
+        
     }
     
     public static Path2D quickHull(Point2D [] points){
