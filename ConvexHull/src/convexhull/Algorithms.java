@@ -15,6 +15,7 @@ import static java.lang.Math.acos;
 import static java.lang.Math.atan2;
 import static java.lang.Math.sqrt;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -175,6 +176,8 @@ public class Algorithms {
         for (Point2D pt : lowerHull){
             hull.lineTo(pt.getX(), pt.getY());
         }
+        Collections.reverse(upperHull);
+        
         for (Point2D pt : upperHull){
             hull.lineTo(pt.getX(), pt.getY());
         }
@@ -196,21 +199,57 @@ public class Algorithms {
         next = iterator.next();
 
         
-        while (iterator.hasNext()){
-            System.err.format("p:%h, c:%h, n:%h\n", prev,cur,next);
-            // Orientace je v pořádku
+        while (true){
+            //System.err.format("Pre: p:%h, c:%h, n:%h\n", prev,cur,next);
+            // Body jsou v pořádku
             if (getOrientation(prev,cur,next) == orientation){
                 prev = cur;
                 cur = next;
+                if (!iterator.hasNext()){
+                    break;
+                }
                 next = iterator.next();
+                //System.err.format("Post OK: p:%h, c:%h, n:%h\n", prev,cur,next);
                 continue;
             }
-            System.out.println("Orientation test failed");
+            // Body jsou špatně
+            Point2D tmp;
+            iterator.previous(); //přesun mezi cur a next, vrací next
+            iterator.previous(); //přesun mezi prev a cur, vrací cur
+            iterator.remove();   //smaže cur
+            
+            iterator.previous(); //přesun před prev
+            if (!iterator.hasPrevious()){
+                iterator.next(); //přesun za prev
+                cur = iterator.next(); //přesun za cur
+                if (!iterator.hasNext()){
+                    break;
+                }
+                next = iterator.next();
+            } else {
+                iterator.next();          
+                cur = iterator.previous();
+                prev = iterator.previous();
+                iterator.next();
+                iterator.next();
+                tmp = iterator.next();
+                //System.err.format("check: %h\n",tmp);
+            }
+            
+            //System.err.format("Post F: p:%h, c:%h, n:%h\n", prev,cur,next);
+            
+            
+            /*
+            next = iterator.next();
+            
+            // Orientace je v pořádku
+            
+            System.err.println("Orientation test failed");
             //Orientace je rozbitá => smažeme předchozí vrchol
             iterator.previous();
             iterator.remove();
             cur = iterator.next();
-            next = iterator.next();
+            */
         }
         
     }
@@ -240,8 +279,8 @@ public class Algorithms {
         Point2D[] upperHull = qh(maxx,minx,splitted[0]);
         Point2D[] lowerHull = qh(minx,maxx,splitted[1]);
         
-        System.out.println(upperHull.length);
-        System.out.println(lowerHull.length);
+        //System.out.println(upperHull.length);
+        //System.out.println(lowerHull.length);
         
         for (Point2D pt: lowerHull){
             hull.lineTo(pt.getX(), pt.getY());
@@ -274,14 +313,14 @@ public class Algorithms {
         }
         
         if (farthestPt == null){
-            System.out.println("FP je null");
+           // System.out.println("FP je null");
         }
         
         List<Point2D>[] startPts = splitPoints(farthestPt,start,points);
         List<Point2D>[] endPts = splitPoints(end,farthestPt, points);
         if (startPts[0].size() + startPts[1].size() + 2 != points.size()){
-            System.out.print("Nesedi soucet: ");
-            System.out.format("0: %d 1: %d p:%d\n",startPts[0].size(),startPts[1].size(),points.size());
+           // System.out.print("Nesedi soucet: ");
+           // System.out.format("0: %d 1: %d p:%d\n",startPts[0].size(),startPts[1].size(),points.size());
         }
         
         

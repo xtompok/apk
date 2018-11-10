@@ -35,7 +35,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="sweepButton" max="32767" attributes="0"/>
+                          <Component id="benchmarkButton" max="32767" attributes="0"/>
                           <Component id="qhButton" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -48,6 +48,13 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Component id="jarvisButton1" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="690" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+          <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="sweepButton1" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="690" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -64,9 +71,9 @@
                       <Component id="pointsButton" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
                       <Component id="qhButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="sweepButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="394" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                      <Component id="benchmarkButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="334" max="32767" attributes="0"/>
                   </Group>
                   <Component id="drawPanel1" max="32767" attributes="0"/>
               </Group>
@@ -77,6 +84,13 @@
                   <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
                   <Component id="jarvisButton1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="492" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+          <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="241" max="-2" attributes="0"/>
+                  <Component id="sweepButton1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="396" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -127,12 +141,20 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jarvisButton1ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="sweepButton">
+    <Component class="javax.swing.JButton" name="benchmarkButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Benchmark!"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="benchmarkButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="sweepButton1">
       <Properties>
         <Property name="text" type="java.lang.String" value="SweepLine"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sweepButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sweepButton1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
