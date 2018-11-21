@@ -442,8 +442,15 @@ public class Algorithms {
         
         double n = 0.5*nnom/ndenom;
         
+        Point2D middle = new Point2D.Double(m,n);
         
-        double radius = dist(new Point2D.Double(m,n), p2);
+        double radius = dist(middle, p2);
+        
+        if (getOrientation(p1, p2, middle) == OrientationEnum.CW){
+            radius = -radius;
+        }
+        
+        
         return radius;
     }
     
@@ -460,7 +467,11 @@ public class Algorithms {
             if (getOrientation(e.p1, e.p2, p) != OrientationEnum.CCW){
                 continue;
             }
+            
             double radius = circleRadius(e.p1, e.p2, p);
+            
+            
+            
             if (radius < minradius ){
                 minPoint = p;
                 minradius = radius;
@@ -564,16 +575,6 @@ public class Algorithms {
             dt.add(e2);
             dt.add(e3);
             
-            dp.edges = dt; 
-            dp.repaint(1);
-            dp.revalidate();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Algorithms.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            dp.repaint(1);
-            dp.revalidate();
             
             addToAel(ael, e3);
             addToAel(ael, e2);

@@ -72,7 +72,7 @@ public class drawPanel extends javax.swing.JPanel {
             Path2D epath = new Path2D.Double();
             epath.moveTo(e.p1.getX(), e.p1.getY());
             epath.lineTo(e.p2.getX(), e.p2.getY());
-            gfx.setColor(new Color(i,0,0));
+            //gfx.setColor(new Color(i,0,0));
             AffineTransform at = AffineTransform.getScaleInstance(width, -height);
             epath.transform(at);
             at = AffineTransform.getTranslateInstance(0, height);
