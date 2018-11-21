@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/jethro/Dokumenty/prifuk/apk/ConvexHull/src/convexhull/drawPanel.java</file>
-            <file>file:/home/jethro/Dokumenty/prifuk/apk/ConvexHull/src/convexhull/Algorithms.java</file>
-            <file>file:/home/jethro/Dokumenty/prifuk/apk/ConvexHull/src/convexhull/GUI.java</file>
+            <file>file:/home/jethro/Dokumenty/prifuk/apk/Delaunay/src/convexhull/GUI.java</file>
+            <file>file:/home/jethro/Dokumenty/prifuk/apk/Delaunay/src/convexhull/Edge.java</file>
+            <file>file:/home/jethro/Dokumenty/prifuk/apk/Delaunay/src/convexhull/Triangle.java</file>
+            <file>file:/home/jethro/Dokumenty/prifuk/apk/Delaunay/src/convexhull/drawPanel.java</file>
+            <file>file:/home/jethro/Dokumenty/prifuk/apk/Delaunay/src/convexhull/Algorithms.java</file>
+            <file>file:/home/jethro/Dokumenty/prifuk/apk/Delaunay/src/convexhull/Point3D.java</file>
         </group>
     </open-files>
 </project-private>

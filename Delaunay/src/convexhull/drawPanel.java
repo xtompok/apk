@@ -24,6 +24,7 @@ public class drawPanel extends javax.swing.JPanel {
     
     Point3D [] points;
     List<Edge> edges;
+    List<Triangle> triangles;
     Path2D triangulation;
     
     
@@ -35,6 +36,7 @@ public class drawPanel extends javax.swing.JPanel {
         points = new Point3D[0];
         triangulation = new Path2D.Double();
         edges = new LinkedList<>();
+        triangles = new LinkedList<>();
         initComponents();
     }
     
@@ -72,13 +74,23 @@ public class drawPanel extends javax.swing.JPanel {
             Path2D epath = new Path2D.Double();
             epath.moveTo(e.p1.getX(), e.p1.getY());
             epath.lineTo(e.p2.getX(), e.p2.getY());
-            //gfx.setColor(new Color(i,0,0));
             AffineTransform at = AffineTransform.getScaleInstance(width, -height);
             epath.transform(at);
             at = AffineTransform.getTranslateInstance(0, height);
             epath.transform(at);
             gfx.draw(epath);
-            i-=2;
+        }
+        for (Triangle t: triangles){
+            Path2D epath = new Path2D.Double();
+            epath.moveTo(t.p1.getX(), t.p1.getY());
+            epath.lineTo(t.p2.getX(), t.p2.getY());
+            epath.lineTo(t.p3.getX(), t.p3.getY());
+            epath.lineTo(t.p1.getX(), t.p1.getY());
+            AffineTransform at = AffineTransform.getScaleInstance(width, -height);
+            epath.transform(at);
+            at = AffineTransform.getTranslateInstance(0, height);
+            epath.transform(at);
+            gfx.draw(epath);
         }
         
         

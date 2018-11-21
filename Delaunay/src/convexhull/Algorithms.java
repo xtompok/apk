@@ -506,8 +506,8 @@ public class Algorithms {
         ael.add(edge);  
     }
     
-    public static List<Edge> delaunay(Point3D[] points){
-        List<Edge> dt = new LinkedList<>();
+    public static List<Triangle> delaunay(Point3D[] points){
+        List<Triangle> dt = new LinkedList<>();
         
         Point3D p1 = points[0];
         Point3D p2 = null;
@@ -542,11 +542,7 @@ public class Algorithms {
       
         }
         
- 
-        
-        dt.add(e);
-        dt.add(e2);
-        dt.add(e3);
+        dt.add(new Triangle(p1, p2, p));
         
         //Set<Edge> ael;
         List<Edge> ael;
@@ -575,23 +571,94 @@ public class Algorithms {
             e2 = new Edge(e.p2, p);
             e3 = new Edge(p,e.p1);
             
-            dt.add(e);
-            dt.add(e2);
-            dt.add(e3);
+            dt.add(new Triangle(e.p1, e.p2, p));
             
             
             addToAel(ael, e3);
             addToAel(ael, e2);
-            
-            
-            
+
+        }
+
+        return dt;
+    }
+    
+    public static List<Point3D> calcContourPoints(Point3D p1, Point3D p2, double z){
+        Point3D lower;
+        Point3D upper;
+        if (p1.getZ() < p2.getZ()) {
+            lower = p1;
+            upper = p2;
+        } else {
+            lower = p2;
+            upper = p1;
+        }
+
+        double dh = upper.getZ() - lower.getZ();
+        double d = dist(lower, upper);
+
+        List<Point3D> pts;
+        pts = new LinkedList<>();
+
+        int k = 0;
+        while (k * z + lower.getZ() < upper.getZ()) {
+            double tmp = Math.floor(lower.getZ() / z);
+            double dhtoCont = z - (lower.getZ() - (tmp * z)); // Kolik mi chybí k nejbližší vrstevnici        
+            double scale = (dhtoCont + z * k) / dh;
+            double x = (upper.getX() - lower.getX()) * scale + lower.getX(); // posunu do 0, škáluji, posunu zpět
+            double y = (upper.getY() - lower.getY()) * scale + lower.getY(); // posunu do 0, škáluji, posunu zpět           
+            pts.add(new Point3D(x, y, lower.getZ() + dhtoCont + z * k));
+            k++;
+        }
+        return pts;
+    }
+    
+    public static List<Edge> calcContours(Triangle t, double interval){
+        List<Edge> edges;
+        edges = new LinkedList<>();
         
+        List<Point3D> ptsp1p2;
+        List<Point3D> ptsp2p3;
+        List<Point3D> ptsp3p1;
         
+        ptsp1p2 = calcContourPoints(t.p1, t.p2, interval);
+        ptsp2p3 = calcContourPoints(t.p2, t.p3, interval);
+        ptsp3p1 = calcContourPoints(t.p3, t.p1, interval);
+
+        for (Point3D p: ptsp1p2){
+            for (Point3D p2: ptsp2p3){
+                if (p.getZ() == p2.getZ()){
+                    edges.add(new Edge(p,p2));
+                }
+            }
+            for (Point3D p2: ptsp3p1){
+                if (p.getZ() == p2.getZ()){
+                    edges.add(new Edge(p,p2));
+                }
+            }
+        }
+        for (Point3D p: ptsp2p3){
+            for (Point3D p2: ptsp3p1){
+                if (p.getZ() == p2.getZ()){
+                    edges.add(new Edge(p,p2));
+                }
+            }
         }
         
         
         
-        return dt;
+          
+        return edges;
+    }
+    
+    public static List<Edge> calcContours(List<Triangle> tl, double interval){
+        List<Edge> edges;
+        edges = new LinkedList<>();
+        for (Triangle t: tl){
+            List<Edge> tedges;
+            tedges = calcContours(t, interval);
+            edges.addAll(tedges);
+        }
+        return edges;
     }
     
     
