@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class drawPanel extends javax.swing.JPanel {
     
-    Point2D [] points;
+    Point3D [] points;
     List<Edge> edges;
     Path2D triangulation;
     
@@ -32,7 +32,7 @@ public class drawPanel extends javax.swing.JPanel {
      * Creates new form drawPanel
      */
     public drawPanel() {
-        points = new Point2D[0];
+        points = new Point3D[0];
         triangulation = new Path2D.Double();
         edges = new LinkedList<>();
         initComponents();

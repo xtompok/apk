@@ -14,8 +14,8 @@ import java.util.Set;
  * @author jethro
  */
 public class Edge {
-    public Point2D p1;
-    public Point2D p2;
+    public Point3D p1;
+    public Point3D p2;
     
    // private static Set<Point2D[]> edges;
     
@@ -23,13 +23,13 @@ public class Edge {
         Point2D [] pts = new 
     }*/
     
-    public Edge(Point2D p1, Point2D p2){
+    public Edge(Point3D p1, Point3D p2){
         this.p1 = p1;
         this.p2 = p2;
     }
     
     public void swap(){
-        Point2D tmp;
+        Point3D tmp;
         tmp = p1;
         p1 = p2;
         p2 = tmp;

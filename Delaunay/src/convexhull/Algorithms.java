@@ -44,7 +44,11 @@ public class Algorithms {
              return OrientationEnum.CW;
          }else {
              return OrientationEnum.CCW;
-         }
+         } 
+    }
+    
+    public static OrientationEnum getOrientation(Point3D p1, Point3D p2, Point3D p3){
+        return getOrientation(p1.toPoint2D(), p2.toPoint2D(), p3.toPoint2D());
     }
     
     public static double dotProd(double ux, double uy, double vx, double vy){
@@ -393,12 +397,12 @@ public class Algorithms {
         return nom/denom;
     }
     
-    public static double dist(Point2D p1, Point2D p2){
+    public static double dist(Point3D p1, Point3D p2){
         return Math.sqrt((p1.getX()-p2.getX())*(p1.getX()-p2.getX()) + 
                          (p1.getY()-p2.getY())*(p1.getY()-p2.getY()));
     }
     
-    public static double circleRadiusOld(Point2D p1, Point2D p2, Point2D p3){
+    /*public static double circleRadiusOld(Point2D p1, Point2D p2, Point2D p3){
         double x1 = p1.getX();  double x2 = p2.getX();  double x3 = p3.getX();
         double y1 = p1.getY();  double y2 = p2.getY();  double y3 = p3.getY();
 
@@ -414,9 +418,9 @@ public class Algorithms {
         
         double radius = dist(new Point2D.Double(x,y), p2);
         return radius;
-    }
+    }*/
     
-    public static double circleRadius(Point2D p1, Point2D p2, Point2D p3){
+    public static double circleRadius(Point3D p1, Point3D p2, Point3D p3){
         double x1 = p1.getX();  double x2 = p2.getX();  double x3 = p3.getX();
         double y1 = p1.getY();  double y2 = p2.getY();  double y3 = p3.getY();
 
@@ -442,7 +446,7 @@ public class Algorithms {
         
         double n = 0.5*nnom/ndenom;
         
-        Point2D middle = new Point2D.Double(m,n);
+        Point3D middle = new Point3D(m,n,0);
         
         double radius = dist(middle, p2);
         
@@ -454,11 +458,11 @@ public class Algorithms {
         return radius;
     }
     
-    public static Point2D minimalBoundingCircle(Edge e,Point2D [] points){
-        Point2D minPoint = null;
+    public static Point3D minimalBoundingCircle(Edge e,Point3D [] points){
+        Point3D minPoint = null;
         double minradius = Double.MAX_VALUE;
         
-        for (Point2D p : points){
+        for (Point3D p : points){
             if (p == e.p1 || p == e.p2){
                 continue;
             }
@@ -502,13 +506,13 @@ public class Algorithms {
         ael.add(edge);  
     }
     
-    public static List<Edge> delaunay(Point2D[] points,drawPanel dp){
+    public static List<Edge> delaunay(Point3D[] points){
         List<Edge> dt = new LinkedList<>();
         
-        Point2D p1 = points[0];
-        Point2D p2 = null;
+        Point3D p1 = points[0];
+        Point3D p2 = null;
         double mindist = Double.MAX_VALUE;
-        for (Point2D p: points){
+        for (Point3D p: points){
             if (p == p1){
                 continue;
             }
@@ -518,7 +522,7 @@ public class Algorithms {
             }
         }
         Edge e = new Edge(p1,p2);
-        Point2D p = minimalBoundingCircle(e, points);
+        Point3D p = minimalBoundingCircle(e, points);
         
         Edge e2;
         Edge e3;

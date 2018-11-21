@@ -124,13 +124,13 @@ public class GUI extends javax.swing.JFrame {
         int npoints;
         npoints = Integer.parseInt(pointCountField.getText());
         
-        drawPanel1.points = generateRandom(npoints);
+        drawPanel1.points = generateRandom3D(npoints);
         drawPanel1.repaint();    
         
     }//GEN-LAST:event_pointsButtonActionPerformed
 
     private void delaunayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delaunayButtonActionPerformed
-        drawPanel1.edges = Algorithms.delaunay(drawPanel1.points,drawPanel1);
+        drawPanel1.edges = Algorithms.delaunay(drawPanel1.points);
         drawPanel1.repaint();
         System.out.println("---------");
     }//GEN-LAST:event_delaunayButtonActionPerformed
@@ -140,8 +140,8 @@ public class GUI extends javax.swing.JFrame {
         npoints = Integer.parseInt(pointCountField.getText());
         
         while (true){
-        drawPanel1.points = generateRandom(npoints);
-        drawPanel1.edges = Algorithms.delaunay(drawPanel1.points,drawPanel1);
+        drawPanel1.points = generateRandom3D(npoints);
+        drawPanel1.edges = Algorithms.delaunay(drawPanel1.points);
 
         drawPanel1.repaint();
         System.out.println("---------");
@@ -167,6 +167,17 @@ public class GUI extends javax.swing.JFrame {
         for (int i=0;i<size;i++){
             
             points[i] = new Point2D.Double(rnd.nextDouble(),rnd.nextDouble());
+        }
+        return points;
+    }
+    private Point3D [] generateRandom3D(int size){
+        Point3D [] points;
+        points = new Point3D[size];
+        Random rnd;
+        rnd = new Random();
+        for (int i=0;i<size;i++){
+            
+            points[i] = new Point3D(rnd.nextDouble(),rnd.nextDouble(),rnd.nextDouble()*200);
         }
         return points;
     }
