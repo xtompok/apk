@@ -17,15 +17,20 @@ import static java.lang.Math.sqrt;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author jethro
  */
 public class Algorithms {
-    public static final double EPSILON = 0.0001;
+    public static final double EPSILON = 0.000001;
     
     public enum PositionEnum {INSIDE,OUTSIDE,BOUNDARY}
     public enum OrientationEnum {CW,COLINEAR,CCW}
@@ -386,6 +391,202 @@ public class Algorithms {
                      (end.getX()-start.getX())*
                      (end.getX()-start.getX()));
         return nom/denom;
+    }
+    
+    public static double dist(Point2D p1, Point2D p2){
+        return Math.sqrt((p1.getX()-p2.getX())*(p1.getX()-p2.getX()) + 
+                         (p1.getY()-p2.getY())*(p1.getY()-p2.getY()));
+    }
+    
+    public static double circleRadiusOld(Point2D p1, Point2D p2, Point2D p3){
+        double x1 = p1.getX();  double x2 = p2.getX();  double x3 = p3.getX();
+        double y1 = p1.getY();  double y2 = p2.getY();  double y3 = p3.getY();
+
+        double mr = (y2-y1) / (x2-x1);
+        double mt = (y3-y2) / (x3-x2);
+
+        if (mr == mt) {
+            return Double.NaN;
+        }
+
+        double x = (mr*mt*(y3-y1) + mr*(x2+x3) - mt*(x1+x2)) / (2*(mr-mt));
+        double y = (y1+y2)/2 - (x - (x1+x2)/2) / mr;
+        
+        double radius = dist(new Point2D.Double(x,y), p2);
+        return radius;
+    }
+    
+    public static double circleRadius(Point2D p1, Point2D p2, Point2D p3){
+        double x1 = p1.getX();  double x2 = p2.getX();  double x3 = p3.getX();
+        double y1 = p1.getY();  double y2 = p2.getY();  double y3 = p3.getY();
+
+        double k1 = x1*x1 + y1*y1;
+        double k2 = x2*x2 + y2*y2;
+        double k3 = x3*x3 + y3*y3;
+        double k4 = y1-y2;
+        double k5 = y1-y3;
+        double k6 = y2-y3;
+        double k7 = x1-x2;
+        double k8 = x1-x3;
+        double k9 = x2-x3;
+        double k10 = x1*x1;
+        double k11 = x2*x2;
+        double k12 = x3*x3;
+                
+        double mnom = (k12*(-k4)+k11*k5-(k10+k4*k5)*k6);
+        double mdenom = (-k4)*x3+x2*k5+x1*(-k6);
+        double m = 0.5*mnom/mdenom;
+        
+        double nnom = k1*(-k9)+k2*k8+k3*(-k7);
+        double ndenom = y1*(-k9)+y2*k8+y3*(-k7);
+        
+        double n = 0.5*nnom/ndenom;
+        
+        
+        double radius = dist(new Point2D.Double(m,n), p2);
+        return radius;
+    }
+    
+    public static Point2D minimalBoundingCircle(Edge e,Point2D [] points){
+        Point2D minPoint = null;
+        double minradius = Double.MAX_VALUE;
+        
+        for (Point2D p : points){
+            if (p == e.p1 || p == e.p2){
+                continue;
+            }
+            
+
+            if (getOrientation(e.p1, e.p2, p) != OrientationEnum.CCW){
+                continue;
+            }
+            double radius = circleRadius(e.p1, e.p2, p);
+            if (radius < minradius ){
+                minPoint = p;
+                minradius = radius;
+            }
+            
+            
+        }
+        return minPoint;
+    }
+    
+    private static void addToAel(List<Edge> ael,Edge edge){
+        Iterator<Edge> it = ael.iterator();
+        Edge swapped = edge.swappedEdge();
+        System.out.print("Swapped:");
+        System.out.println(swapped);
+        
+        while (it.hasNext()){
+            Edge e;
+            e = it.next();
+            if (e.equals(swapped)){
+                it.remove();
+                System.out.print("Existing anti-edge found, removing: ");
+                System.out.println(e);
+                return;
+            }
+        }
+        System.out.println("Edge not found, adding...");
+        ael.add(edge);  
+    }
+    
+    public static List<Edge> delaunay(Point2D[] points,drawPanel dp){
+        List<Edge> dt = new LinkedList<>();
+        
+        Point2D p1 = points[0];
+        Point2D p2 = null;
+        double mindist = Double.MAX_VALUE;
+        for (Point2D p: points){
+            if (p == p1){
+                continue;
+            }
+            if (dist(p1,p) < mindist){
+                p2 = p;
+                mindist = dist(p1,p);
+            }
+        }
+        Edge e = new Edge(p1,p2);
+        Point2D p = minimalBoundingCircle(e, points);
+        
+        Edge e2;
+        Edge e3;
+        
+        if (p == null){
+            e.swap();
+            //Edge erev = new Edge(p2,p1);
+            p = minimalBoundingCircle(e, points);
+            e2 = new Edge(p1,p);
+            e3 = new Edge(p,p2);
+        } else {
+            e2 = new Edge(p2,p);
+            e3 = new Edge(p,p1);
+        }
+        if (p == null){
+            System.out.println("Nemam bod!");
+      
+        }
+        
+ 
+        
+        dt.add(e);
+        dt.add(e2);
+        dt.add(e3);
+        
+        //Set<Edge> ael;
+        List<Edge> ael;
+        //ael = new HashSet<>();
+        ael = new LinkedList<>();
+        
+        ael.add(e);
+        ael.add(e2);
+        ael.add(e3);
+        
+        while (!ael.isEmpty()){
+            System.out.format("Fronta: %d\n", ael.size());
+            Iterator<Edge> it = ael.iterator();
+            e = it.next();
+            it.remove();
+            
+            e.swap();
+            
+            p = minimalBoundingCircle(e, points);
+            System.out.format("p = %h\n",p);
+            System.out.println(e);
+            if (p == null){
+                continue;
+            }
+            
+            e2 = new Edge(e.p2, p);
+            e3 = new Edge(p,e.p1);
+            
+            dt.add(e);
+            dt.add(e2);
+            dt.add(e3);
+            
+            dp.edges = dt; 
+            dp.repaint(1);
+            dp.revalidate();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Algorithms.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            dp.repaint(1);
+            dp.revalidate();
+            
+            addToAel(ael, e3);
+            addToAel(ael, e2);
+            
+            
+            
+        
+        
+        }
+        
+        
+        
+        return dt;
     }
     
     

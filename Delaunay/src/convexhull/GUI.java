@@ -10,6 +10,9 @@ import java.awt.geom.Point2D;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import java.util.Random;
+import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,11 +39,9 @@ public class GUI extends javax.swing.JFrame {
 
         drawPanel1 = new convexhull.drawPanel();
         pointsButton = new javax.swing.JButton();
-        qhButton = new javax.swing.JButton();
         pointCountField = new javax.swing.JTextField();
-        jarvisButton1 = new javax.swing.JButton();
+        delaunayButton = new javax.swing.JButton();
         benchmarkButton = new javax.swing.JButton();
-        sweepButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,33 +63,24 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        qhButton.setText("QuickHull");
-        qhButton.addActionListener(new java.awt.event.ActionListener() {
+        pointCountField.setText("10");
+        pointCountField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                qhButtonActionPerformed(evt);
+                pointCountFieldActionPerformed(evt);
             }
         });
 
-        pointCountField.setText("100");
-
-        jarvisButton1.setText("Jarvis");
-        jarvisButton1.addActionListener(new java.awt.event.ActionListener() {
+        delaunayButton.setText("Delaunay");
+        delaunayButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jarvisButton1ActionPerformed(evt);
+                delaunayButtonActionPerformed(evt);
             }
         });
 
-        benchmarkButton.setText("Benchmark!");
+        benchmarkButton.setText("Benchmark");
         benchmarkButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 benchmarkButtonActionPerformed(evt);
-            }
-        });
-
-        sweepButton1.setText("SweepLine");
-        sweepButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sweepButton1ActionPerformed(evt);
             }
         });
 
@@ -97,30 +89,15 @@ public class GUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pointsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                            .addComponent(pointCountField)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(benchmarkButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(qhButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(pointsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                    .addComponent(pointCountField)
+                    .addComponent(delaunayButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(benchmarkButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(drawPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(22, 22, 22)
-                    .addComponent(jarvisButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(690, 690, 690)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(33, 33, 33)
-                    .addComponent(sweepButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(690, 690, 690)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,23 +108,13 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(pointCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
                         .addComponent(pointsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(92, 92, 92)
-                        .addComponent(qhButton)
-                        .addGap(78, 78, 78)
+                        .addGap(47, 47, 47)
+                        .addComponent(delaunayButton)
+                        .addGap(18, 18, 18)
                         .addComponent(benchmarkButton)
-                        .addGap(0, 334, Short.MAX_VALUE))
+                        .addGap(0, 439, Short.MAX_VALUE))
                     .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(145, 145, 145)
-                    .addComponent(jarvisButton1)
-                    .addContainerGap(492, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(241, 241, 241)
-                    .addComponent(sweepButton1)
-                    .addContainerGap(396, Short.MAX_VALUE)))
         );
 
         pack();
@@ -158,18 +125,39 @@ public class GUI extends javax.swing.JFrame {
         npoints = Integer.parseInt(pointCountField.getText());
         
         drawPanel1.points = generateRandom(npoints);
-        drawPanel1.repaint();
+        drawPanel1.repaint();    
+        
     }//GEN-LAST:event_pointsButtonActionPerformed
 
-    private void qhButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qhButtonActionPerformed
-        drawPanel1.hull = Algorithms.quickHull(drawPanel1.points);
+    private void delaunayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delaunayButtonActionPerformed
+        drawPanel1.edges = Algorithms.delaunay(drawPanel1.points,drawPanel1);
         drawPanel1.repaint();
-    }//GEN-LAST:event_qhButtonActionPerformed
+        System.out.println("---------");
+    }//GEN-LAST:event_delaunayButtonActionPerformed
 
-    private void jarvisButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jarvisButton1ActionPerformed
-        drawPanel1.hull = Algorithms.jarvisScan(drawPanel1.points);
+    private void benchmarkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_benchmarkButtonActionPerformed
+         int npoints;
+        npoints = Integer.parseInt(pointCountField.getText());
+        
+        while (true){
+        drawPanel1.points = generateRandom(npoints);
+        drawPanel1.edges = Algorithms.delaunay(drawPanel1.points,drawPanel1);
+
         drawPanel1.repaint();
-    }//GEN-LAST:event_jarvisButton1ActionPerformed
+        System.out.println("---------");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        
+        }
+    }//GEN-LAST:event_benchmarkButtonActionPerformed
+
+    private void pointCountFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pointCountFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pointCountFieldActionPerformed
 
     private Point2D [] generateRandom(int size){
         Point2D [] points;
@@ -229,42 +217,6 @@ public class GUI extends javax.swing.JFrame {
     }
     
     
-    private void benchmarkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_benchmarkButtonActionPerformed
-        final int gridfrom = 10;
-        final int gridto = 500;
-        
-        final int sizefrom = 100;
-        final int sizeto = 250_000;
-        
-        System.out.println("Benchmarking grid");
-        for (int size = gridfrom; size < gridto; size *= 1.1){          
-            Point2D[] grid = generateGrid(size);
-            benchmarkData(grid);
-        }
-        
-        System.out.println("Benchmarking random");
-        for (int size = sizefrom; size < sizeto; size *=1.1){
-            Point2D [] points = generateRandom(size);
-            benchmarkData(points);
-        }
-        
-        
-        System.out.println("Benchmarking circle");
-        for (int size = sizefrom; size < sizeto; size *=1.1){
-            Point2D [] points = generateCircle(size);
-            benchmarkData(points);
-        }
-        
-        // Vygenerovat data
-        // spustit algoritmy
-        // vypsat výsledek
-    }//GEN-LAST:event_benchmarkButtonActionPerformed
-
-    private void sweepButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sweepButton1ActionPerformed
-        drawPanel1.hull = Algorithms.sweepHull(drawPanel1.points);
-        drawPanel1.repaint();
-    }//GEN-LAST:event_sweepButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -302,12 +254,10 @@ public class GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton benchmarkButton;
+    private javax.swing.JButton delaunayButton;
     private convexhull.drawPanel drawPanel1;
-    private javax.swing.JButton jarvisButton1;
     private javax.swing.JTextField pointCountField;
     private javax.swing.JButton pointsButton;
-    private javax.swing.JButton qhButton;
-    private javax.swing.JButton sweepButton1;
     // End of variables declaration//GEN-END:variables
 
 

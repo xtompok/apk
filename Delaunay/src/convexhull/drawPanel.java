@@ -13,6 +13,8 @@ import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -21,7 +23,8 @@ import java.awt.geom.Point2D;
 public class drawPanel extends javax.swing.JPanel {
     
     Point2D [] points;
-    Path2D hull;
+    List<Edge> edges;
+    Path2D triangulation;
     
     
 
@@ -30,12 +33,14 @@ public class drawPanel extends javax.swing.JPanel {
      */
     public drawPanel() {
         points = new Point2D[0];
-        hull = new Path2D.Double();
+        triangulation = new Path2D.Double();
+        edges = new LinkedList<>();
         initComponents();
     }
     
     @Override
     public void paintComponent(Graphics g){
+        System.err.println("Repainting...");
         super.paintComponent(g);
         Graphics2D gfx = (Graphics2D)g;
         
@@ -61,12 +66,28 @@ public class drawPanel extends javax.swing.JPanel {
 
         }
         
+        int i=255;
+        triangulation = new Path2D.Double();
+        for (Edge e: edges){
+            Path2D epath = new Path2D.Double();
+            epath.moveTo(e.p1.getX(), e.p1.getY());
+            epath.lineTo(e.p2.getX(), e.p2.getY());
+            gfx.setColor(new Color(i,0,0));
+            AffineTransform at = AffineTransform.getScaleInstance(width, -height);
+            epath.transform(at);
+            at = AffineTransform.getTranslateInstance(0, height);
+            epath.transform(at);
+            gfx.draw(epath);
+            i-=2;
+        }
+        
+        
         gfx.setColor(Color.RED);
         AffineTransform at = AffineTransform.getScaleInstance(width, -height);
-        hull.transform(at);
+        triangulation.transform(at);
         at = AffineTransform.getTranslateInstance(0, height);
-        hull.transform(at);
-        gfx.draw(hull);
+        triangulation.transform(at);
+        gfx.draw(triangulation);
     }
 
     /**
