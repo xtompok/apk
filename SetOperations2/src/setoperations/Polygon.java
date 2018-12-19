@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class Polygon {
     protected List<Edge> edges;
+    Algorithms.PositionEnum side;
     
     public Polygon(){
         edges = new LinkedList<>();

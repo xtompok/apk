@@ -14,11 +14,11 @@ import java.awt.geom.Point2D;
 public class Edge {
     protected Point2D start;
     protected Point2D end;
-    protected Boolean inside;
+    protected Algorithms.PositionEnum side;
     
     public Edge(Point2D s, Point2D e){
         start = s;
         end = e;
-        inside = null;
+        side = null;
     }
 }

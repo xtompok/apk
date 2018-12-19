@@ -39,6 +39,9 @@ public class GUI extends javax.swing.JFrame {
         intsButton = new javax.swing.JButton();
         divideButton = new javax.swing.JButton();
         markButton = new javax.swing.JButton();
+        intersectButton = new javax.swing.JButton();
+        unionButton = new javax.swing.JButton();
+        differenceButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,7 +52,7 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        pointCountField.setText("100");
+        pointCountField.setText("10");
 
         javax.swing.GroupLayout drawPanel1Layout = new javax.swing.GroupLayout(drawPanel1);
         drawPanel1.setLayout(drawPanel1Layout);
@@ -83,6 +86,27 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        intersectButton.setText("Intersect");
+        intersectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                intersectButtonActionPerformed(evt);
+            }
+        });
+
+        unionButton.setText("Union");
+        unionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unionButtonActionPerformed(evt);
+            }
+        });
+
+        differenceButton.setText("Difference");
+        differenceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                differenceButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,7 +120,10 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(pointsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(intsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(divideButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(markButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(markButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(intersectButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(unionButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(differenceButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(drawPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -116,7 +143,13 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(divideButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(markButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(425, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addComponent(unionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(intersectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(differenceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(272, Short.MAX_VALUE))))
         );
 
         pack();
@@ -144,6 +177,21 @@ public class GUI extends javax.swing.JFrame {
         Algorithms.setInside(drawPanel1.polyA, drawPanel1.polyB);
         drawPanel1.repaint();
     }//GEN-LAST:event_markButtonActionPerformed
+
+    private void intersectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intersectButtonActionPerformed
+        drawPanel1.polyOut = Algorithms.polyIntersect(drawPanel1.polyA, drawPanel1.polyB);
+        drawPanel1.repaint();
+    }//GEN-LAST:event_intersectButtonActionPerformed
+
+    private void unionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unionButtonActionPerformed
+        drawPanel1.polyOut = Algorithms.polyUnion(drawPanel1.polyA, drawPanel1.polyB);
+        drawPanel1.repaint();
+    }//GEN-LAST:event_unionButtonActionPerformed
+
+    private void differenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_differenceButtonActionPerformed
+        drawPanel1.polyOut = Algorithms.polyDiff(drawPanel1.polyA, drawPanel1.polyB);
+        drawPanel1.repaint();
+    }//GEN-LAST:event_differenceButtonActionPerformed
 
     public Point2D[] generateStar(int size){
         Point2D [] points;
@@ -197,11 +245,14 @@ public class GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton differenceButton;
     private javax.swing.JButton divideButton;
     private setoperations.drawPanel drawPanel1;
+    private javax.swing.JButton intersectButton;
     private javax.swing.JButton intsButton;
     private javax.swing.JButton markButton;
     private javax.swing.JTextField pointCountField;
     private javax.swing.JButton pointsButton;
+    private javax.swing.JButton unionButton;
     // End of variables declaration//GEN-END:variables
 }

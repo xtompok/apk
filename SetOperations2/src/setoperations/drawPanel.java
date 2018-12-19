@@ -23,12 +23,14 @@ public class drawPanel extends javax.swing.JPanel {
     protected Polygon polyA;
     protected Polygon polyB;
     protected List<IntersectionPoint> intersec;
+    protected List<Polygon> polyOut;
 
    
     
     public drawPanel() {
         polyA = null;
         polyB = null;
+        polyOut = new LinkedList<>();
         intersec = new LinkedList<>();
         initComponents();
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -48,16 +50,40 @@ public class drawPanel extends javax.swing.JPanel {
             return;
         }
         
-        Path2D pA = drawPoly(polyA);
-        Path2D pB = drawPoly(polyB);
+        for (Polygon p: polyOut){
+            Path2D ppath = drawSinglePoly(p);
+            ppath = affineTransform(ppath, width, height);
+            if (p.side == Algorithms.PositionEnum.INSIDE){
+                gfx.setColor(Color.yellow);
+            } else {
+                gfx.setColor(Color.cyan);
+            }
+            gfx.fill(ppath);
+        }
         
-        pA = affineTransform(pA, width, height);
-        pB = affineTransform(pB, width, height);
+        
+        Path2D[] pA = drawPoly(polyA);
+        Path2D[] pB = drawPoly(polyB);
+        
+        Path2D pAin;
+        Path2D pAout;
+        Path2D pBin;
+        Path2D pBout;
+        
+        pAin = affineTransform(pA[0], width, height);
+        pBin = affineTransform(pB[0], width, height);
+        pAout = affineTransform(pA[1], width, height);
+        pBout = affineTransform(pB[1], width, height);
         
         gfx.setColor(Color.red);
-        gfx.draw(pA);
+        gfx.draw(pAin);
+        gfx.setColor(Color.orange);
+        gfx.draw(pAout); 
+        
         gfx.setColor(Color.green);
-        gfx.draw(pB);
+        gfx.draw(pBin);        
+        gfx.setColor(Color.blue);
+        gfx.draw(pBout);
         
         
         
@@ -78,17 +104,29 @@ public class drawPanel extends javax.swing.JPanel {
     }
     
     
-    private static Path2D drawPoly(Polygon p){
+    private static Path2D[] drawPoly(Polygon p){
+        Path2D[] paths = new Path2D[2];
+        paths[0] = new Path2D.Double();
+        paths[1] = new Path2D.Double();
+        for (Edge e : p.edges){
+            if (e.side == null || e.side == Algorithms.PositionEnum.OUTSIDE){ //outside or unknown
+                paths[1].moveTo(e.start.getX(), e.start.getY());
+                paths[1].lineTo(e.end.getX(), e.end.getY());
+            } else { // inside
+                paths[0].moveTo(e.start.getX(), e.start.getY());
+                paths[0].lineTo(e.end.getX(), e.end.getY());
+                System.out.println("Inside!");
+            }
+        }        
+        return paths;
+    }
+    
+    private static Path2D drawSinglePoly(Polygon p){
         Path2D path = new Path2D.Double();
         path.moveTo(p.edges.get(0).start.getX(), p.edges.get(0).start.getY());
         for (Edge e : p.edges){
-            if (e.inside != null && e.inside == false){
-                continue;
-            }
-            path.lineTo(e.end.getX(), e.end.getY());
-        }
-        path.lineTo(p.edges.get(p.edges.size()-1).end.getX(),p.edges.get(p.edges.size()-1).end.getY());
-        
+                path.lineTo(e.end.getX(), e.end.getY());
+        }        
         return path;
     }
     
